@@ -1,0 +1,32 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="actorgame 0.2"
+config/version="0.2"
+run/main_scene="res://editor.tscn"
+config/features=PackedStringArray("4.2", "Forward Plus")
+
+[autoload]
+
+World="*res://world.gd"
+Config="*res://config.gd"
+
+[display]
+
+window/size/viewport_width=800
+window/size/viewport_height=600
+window/size/initial_position_type=0
+window/vsync/vsync_mode=0
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

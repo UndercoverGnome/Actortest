@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://0261dfy05mei"]
+
+[ext_resource type="Script" path="res://editor.gd" id="1_n6h5v"]
+[ext_resource type="Script" path="res://EditorUI.gd" id="2_pgnb8"]
+
+[node name="Editor" type="Node"]
+script = ExtResource("1_n6h5v")
+
+[node name="EditorUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_pgnb8")
+
+[node name="AddActorButton" type="Button" parent="EditorUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -85.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "Add Actor"
+
+[node name="PlayButton" type="Button" parent="EditorUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -41.0
+offset_top = 32.0
+offset_bottom = 63.0
+grow_horizontal = 0
+text = "Play"
+
+[connection signal="pressed" from="EditorUI/AddActorButton" to="." method="_on_add_actor_button_pressed"]
+[connection signal="pressed" from="EditorUI/PlayButton" to="." method="_on_play_button_pressed"]
