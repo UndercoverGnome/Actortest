@@ -25,6 +25,7 @@ func initializePlayer():
 		0,
 		randi_range(0,1),
 		"Play Er",
-		30
+		30,
+		Vector2(0,0)
 		)
 	chunks[0][0].addactor(player)

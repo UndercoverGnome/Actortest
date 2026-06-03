@@ -15,7 +15,7 @@ func _draw():
 	draw_string(font, Vector2(0,(World.mapsize.y*tilesize)+16), "mapsize:"+str(World.mapsize), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)
 	draw_string(font, Vector2(0,(World.mapsize.y*tilesize)+32), "tiles:"+str(World.mapsize.x*World.mapsize.y), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)
 
-	draw_rect(Rect2(Vector2(selectedtilepos.x*tilesize,selectedtilepos.y*tilesize), Vector2(tilesize, tilesize)),Color(0, 0, 1, 1), true)#drawplayerrepresentation
+	#drawplayerrepresentation
 
 	#DRAW SELECTED TILE INSPECTOR
 	draw_string(font, Vector2((World.mapsize.x*tilesize),16), "selectedtile:"+str(selectedtilepos), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)

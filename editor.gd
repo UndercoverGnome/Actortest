@@ -22,6 +22,7 @@ func _input(event):
 
 func _on_add_actor_button_pressed():
 	var tempactor=Actor.new()
+	tempactor.controller=0
 	tempactor.sex=randi_range(0,1)
 	if(tempactor.sex==0):
 		tempactor.title=Config.masculineForenames.pick_random()+" "+Config.surnames.pick_random()
@@ -31,6 +32,7 @@ func _on_add_actor_button_pressed():
 		tempactor.title="unnamed"
 
 	tempactor.health=100
+	tempactor.chunk=Vector2i(tile.x,tile.y)
 	World.chunks[tile.x][tile.y].addactor(tempactor)
 
 
