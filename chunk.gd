@@ -22,5 +22,6 @@ func alignActorWithChunk(actor):
 
 func tick():
 	for actor in actors:
-		actor.movechunk(Vector2i(randi_range(-1,1),randi_range(-1,1)))
+		if actor != World.player:
+			actor.movechunk(Vector2i(randi_range(-1,1),randi_range(-1,1)))
 		alignActorWithChunk(actor)

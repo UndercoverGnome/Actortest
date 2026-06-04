@@ -24,7 +24,7 @@ func initializeChunks():
 		chunks.append(column)
 
 func initializePlayer():
-	player = Actor.new(
+	player = Humanoid.new(
 		0,
 		randi_range(0,1),
 		"Play Er",

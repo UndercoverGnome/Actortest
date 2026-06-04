@@ -21,7 +21,7 @@ func _input(event):
 			$EditorUI.selectedtilepos = tile
 
 func _on_add_actor_button_pressed():
-	var tempactor=Actor.new()
+	var tempactor=Humanoid.new()
 	tempactor.controller=0
 	tempactor.sex=randi_range(0,1)
 	if(tempactor.sex==0):
