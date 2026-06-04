@@ -15,8 +15,8 @@ func _draw():
 	draw_string(font, Vector2(0,(World.mapsize.y*tilesize)+16), "mapsize:"+str(World.mapsize), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)
 	draw_string(font, Vector2(0,(World.mapsize.y*tilesize)+32), "tiles:"+str(World.mapsize.x*World.mapsize.y), HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.WHITE)
 
-	draw_rect(Rect2(Vector2((World.player.chunk.x*tilesize)+(tilesize/8),(World.player.chunk.y*tilesize)+(tilesize/8)), Vector2((tilesize/8)*6, (tilesize/8)*6)),Color(0, 0, 1, 1), false)#drawplayerrepresentation
-	draw_rect(Rect2(Vector2((World.player.chunk.x*tilesize)+(tilesize/4),(World.player.chunk.y*tilesize)+(tilesize/4)), Vector2(tilesize/2, tilesize/2)),Color(1, 0, 0, 1), true)#drawplayerrepresentation
+	draw_rect(Rect2(Vector2((World.player.chunkpos.x*tilesize)+(tilesize/8),(World.player.chunkpos.y*tilesize)+(tilesize/8)), Vector2((tilesize/8)*6, (tilesize/8)*6)),Color(0, 0, 1, 1), false)#drawplayerrepresentation
+	draw_rect(Rect2(Vector2((World.player.chunkpos.x*tilesize)+(tilesize/4),(World.player.chunkpos.y*tilesize)+(tilesize/4)), Vector2(tilesize/2, tilesize/2)),Color(1, 0, 0, 1), true)#drawplayerrepresentation
 
 
 	#DRAW SELECTED TILE INSPECTOR

@@ -1,21 +1,22 @@
 #ACTOR.GD
+#PLANNED TYPES OF ACTOR:
+#Humanoid, Creature, Vehicle, Item, Projectile
 class_name Actor
 
-var controller #0 = AI, 1 = player
 var title
-var chunk: Vector2i
+var chunkpos: Vector2i
 
-func _init(setcontroller = 0, settitle = "unnamed", setchunk=Vector2i(0,0)):
-	controller = setcontroller
+func _init(settitle = "unnamed", setchunk=Vector2i(0,0)):
 	title = settitle
-	chunk = setchunk
+	chunkpos = setchunk
 
-func setchunk(destination: Vector2i):
-	if destination.x>=0 and destination.y>=0 and destination.x<World.mapsize.x and destination.y<World.mapsize.y:
-		chunk=destination
-		print(title+' moved to '+str(destination))
+func setChunk(destination: Vector2i):
+	if World.isValidChunk(destination):
+		chunkpos=destination
+		#print(title+' moved to '+str(destination))
 	else:
-		print(title+' cannot move outside of world bounds')
+		pass
+		#print(title+' cannot move outside of world bounds')
 
-func movechunk(directionvector: Vector2i):
-	setchunk(chunk+directionvector)
+func moveChunk(directionvector: Vector2i):
+	setChunk(chunkpos+directionvector)

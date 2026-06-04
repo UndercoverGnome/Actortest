@@ -25,10 +25,12 @@ func initializeChunks():
 
 func initializePlayer():
 	player = Humanoid.new(
-		0,
 		randi_range(0,1),
 		"Play Er",
 		30,
 		Vector2(0,0)
 		)
-	chunks[0][0].addactor(player)
+	chunks[0][0].addActor(player)
+
+func isValidChunk(pos: Vector2i):
+	return pos.x >= 0 and pos.y >= 0 and pos.x < mapsize.x and pos.y < mapsize.y
