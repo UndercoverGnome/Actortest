@@ -14,5 +14,13 @@ func _init(setcontroller = 0, setsex = randi_range(0,1), settitle = "unnamed", s
 	health = sethealth
 	chunk = setchunk
 
-#func moveto():
+func setchunk(destination: Vector2i):
+	if destination.x>=0 and destination.y>=0 and destination.x<World.mapsize.x and destination.y<World.mapsize.y:
+		chunk=destination
+		print(title+' moved to '+str(destination))
+	else:
+		print(title+' cannot move outside of world bounds')
+
+func movechunk(directionvector: Vector2i):
+	setchunk(chunk+directionvector)
 
