@@ -17,7 +17,10 @@ func initializeChunks():
 	for x in range(mapsize.x):
 		var column = []
 		for y in range(mapsize.y):
-			column.append(Chunk.new(Vector2i(x,y)))
+			column.append(
+				Chunk.new(Vector2i(x,y),
+				Config.phoneticalphabet[x % 26]+str(x/26)+'-'+Config.phoneticalphabet[y % 26]+str(y/26))
+				)
 		chunks.append(column)
 
 func initializePlayer():

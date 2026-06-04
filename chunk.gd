@@ -13,10 +13,14 @@ func _init(setchunkid, settitle = Config.phoneticalphabet.pick_random()+"-"+Conf
 func addactor(actortoadd):
 	actors.append(actortoadd)
 
+func alignActorWithChunk(actor):
+	if actor.chunk != chunkid:
+		print(str(chunkid)+" fixing misalignment between actor.chunk and actor's world chunk array location")
+		World.chunks[actor.chunk.x][actor.chunk.y].addactor(actor)
+		var actorarraylocation = actors.find(actor)
+		actors.pop_at(actorarraylocation)
+
 func tick():
 	for actor in actors:
-		if actor.chunk != chunkid:
-			print(str(chunkid)+" fixing misalignment between actor.chunk and actor's world chunk array location")
-			World.chunks[actor.chunk.x][actor.chunk.y].addactor(actor)
-			var actorarraylocation = actors.find(actor)
-			actors.pop_at(actorarraylocation)
+		actor.movechunk(Vector2i(randi_range(-1,1),randi_range(-1,1)))
+		alignActorWithChunk(actor)
