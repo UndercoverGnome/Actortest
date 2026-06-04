@@ -17,3 +17,6 @@ func tick():
 	for actor in actors:
 		if actor.chunk != chunkid:
 			print("misalign")
+			World.chunks[actor.chunk.x][actor.chunk.y].addactor(actor)
+			var actorarraylocation = actors.find(actor)
+			actors.pop_at(actorarraylocation)
