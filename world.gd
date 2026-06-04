@@ -17,7 +17,7 @@ func initializeChunks():
 	for x in range(mapsize.x):
 		var column = []
 		for y in range(mapsize.y):
-			column.append(Chunk.new())
+			column.append(Chunk.new(Vector2i(x,y)))
 		chunks.append(column)
 
 func initializePlayer():

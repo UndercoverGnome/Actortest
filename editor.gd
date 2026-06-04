@@ -37,5 +37,4 @@ func _on_add_actor_button_pressed():
 
 
 func _on_play_button_pressed():
-	print('play')
 	get_tree().change_scene_to_file('res://game.tscn')
