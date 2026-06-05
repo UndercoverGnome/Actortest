@@ -1,12 +1,27 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctcrrnr633plu"]
+[gd_scene load_steps=6 format=3 uid="uid://ctcrrnr633plu"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_sxcvi"]
+[ext_resource type="Texture2D" uid="uid://nlqind701611" path="res://images/clouds.png" id="2_kuukb"]
 
-[node name="Game" type="Node"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1sopq"]
+sky_cover = ExtResource("2_kuukb")
+ground_bottom_color = Color(0.341176, 0.388235, 0.541176, 1)
+
+[sub_resource type="Sky" id="Sky_a0xnw"]
+sky_material = SubResource("ProceduralSkyMaterial_1sopq")
+
+[sub_resource type="Environment" id="Environment_argb6"]
+background_mode = 2
+sky = SubResource("Sky_a0xnw")
+glow_enabled = true
+
+[node name="Game" type="Node" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_sxcvi")
+camera = NodePath("Camera3D")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 10)
+environment = SubResource("Environment_argb6")
 fov = 90.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]

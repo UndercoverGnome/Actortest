@@ -14,9 +14,7 @@ func addActor(actortoadd):
 	actors.append(actortoadd)
 
 func updateActorChunk(actor):
-	print('updatedactor')
 	if actor.chunkpos != chunkid:
-		#print(str(chunkid)+" fixing misalignment between actor.chunk and actor's world chunk array location")
 		World.chunks[actor.chunkpos.x][actor.chunkpos.y].addActor(actor)
 		var actorarraylocation = actors.find(actor)
 		actors.pop_at(actorarraylocation)
