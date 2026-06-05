@@ -5,6 +5,7 @@ var tickTimer = 0.0
 var tickRateAverage = 0
 var tick_count = 0
 var elapsed_seconds = 0
+var drawnchunks = []
 
 @export var camera: Node
 
@@ -23,16 +24,18 @@ func tickChunks():
 		for chunk in chunkcolumn:
 			chunk.tick()
 
-func drawChunk(position:Vector2i, size, tempheight):
-	var ground_mesh = MeshInstance3D.new()
-	ground_mesh.position=Vector3(position.x*size,tempheight,position.y*size)
-	ground_mesh.mesh = PlaneMesh.new()
-	ground_mesh.mesh.size=Vector2(size,size)
-	ground_mesh.mesh.center_offset=Vector3(size/2,0,size/2)
-	add_child(ground_mesh)
+func drawChunk(position:Vector2i, size):
+	var ground = MeshInstance3D.new()
+	ground.position=Vector3(position.x*size,0,position.y*size)
+	ground.mesh = PlaneMesh.new()
+	ground.mesh.size=Vector2(size,size)
+	ground.mesh.center_offset=Vector3(size/2,0,size/2)
+	add_child(ground)
+	return ground
 
 func cameraMovement(delta):
 	var forward = -camera.global_transform.basis.z.normalized()
+	forward.y = 0
 	var right = camera.global_transform.basis.x.normalized()
 
 	if Input.is_action_pressed("w"):
@@ -61,15 +64,22 @@ func cameraMovement(delta):
 		camera.rotation.y+=delta*Config.cameraRotationSpeed
 	if Input.is_action_pressed('ui_right'):
 		camera.rotation.y-=delta*Config.cameraRotationSpeed
+	World.player.setChunk(Vector2i(floor(camera.position.x/Config.chunksize),floor(camera.position.z/Config.chunksize)))
 
 func _ready():
-	for x in range(World.chunks.size()):
-		for y in range(World.chunks[x].size()):
-			drawChunk(Vector2(x, y), 4, World.chunks[x][y].temptestingheight*1)
+	pass
+	#drawnchunks = []
+	#for x in range(World.chunks.size()):
+	#	for y in range(World.chunks[x].size()):
+	#		drawnchunks.append(drawChunk(Vector2(x, y), Config.chunksize))
+
+	#for x in range(drawnchunks.size()):
+	#	if x == 12:
+	#		drawnchunks[x].queue_free()
+	#		drawnchunks.pop_at(x)
 
 
 func _process(delta):
-
 	if Input.is_action_just_pressed('stresstest'):
 		for x in 1000:
 			var tempactor=Humanoid.new()
@@ -104,6 +114,22 @@ func _process(delta):
 
 func tick():
 	tickChunks()
+
+	var playerx = World.player.chunkpos.x
+	var playery = World.player.chunkpos.y
+
+	for chunk in drawnchunks:
+		chunk.queue_free()
+	drawnchunks.clear()
+
+	drawnchunks.append(drawChunk(Vector2(playerx, playery), Config.chunksize))
+	drawnchunks.append(drawChunk(Vector2(playerx+1, playery), Config.chunksize))
+	drawnchunks.append(drawChunk(Vector2(playerx-1, playery), Config.chunksize))
+	drawnchunks.append(drawChunk(Vector2(playerx, playery+1), Config.chunksize))
+	drawnchunks.append(drawChunk(Vector2(playerx, playery-1), Config.chunksize))
+
+
+
 
 func _on_editor_button_pressed():
 	get_tree().change_scene_to_file('res://editor.tscn')

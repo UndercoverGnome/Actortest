@@ -4,13 +4,11 @@ class_name Chunk
 var title
 var actors
 var chunkid: Vector2i
-var temptestingheight
 
 func _init(setchunkid, settitle = Config.phoneticalphabet.pick_random()+"-"+Config.phoneticalphabet.pick_random(), setactors = []):
 	chunkid = setchunkid
 	title = settitle
 	actors = setactors
-	temptestingheight = setchunkid.x+setchunkid.y
 
 func addActor(actortoadd):
 	actors.append(actortoadd)

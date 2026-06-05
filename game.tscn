@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctcrrnr633plu"]
+[gd_scene load_steps=8 format=3 uid="uid://ctcrrnr633plu"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_sxcvi"]
 [ext_resource type="Texture2D" uid="uid://nlqind701611" path="res://images/clouds.png" id="2_kuukb"]
@@ -17,6 +17,9 @@ glow_enabled = true
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_4vnxm"]
 auto_exposure_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_pgsjx"]
+size = Vector3(2048, 100, 1)
 
 [node name="Game" type="Node" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_sxcvi")
@@ -47,5 +50,13 @@ offset_left = -41.0
 offset_bottom = 31.0
 grow_horizontal = 0
 text = "Editor"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+mesh = SubResource("BoxMesh_pgsjx")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -8)
+mesh = SubResource("BoxMesh_pgsjx")
 
 [connection signal="pressed" from="GameUI/EditorButton" to="." method="_on_editor_button_pressed"]
