@@ -23,21 +23,12 @@ func tickChunks():
 		for chunk in chunkcolumn:
 			chunk.tick()
 
-func drawChunks():
-	#var ground = StaticBody3D.new()
-	#add_child(ground)
-	#var ground_mesh = MeshInstance3D.new()
-	#ground.add_child(ground_mesh)
-	#var plane_mesh = PlaneMesh.new()
-	#plane_mesh.size = Vector2(16, 16)
-	#ground_mesh.mesh = plane_mesh
-	#var collision_shape = CollisionShape3D.new()
-	#ground.add_child(collision_shape)
-	#var box_shape = BoxShape3D.new()
-	#box_shape.size = Vector3(16, 1, 16)
-	#collision_shape.shape = box_shape
+func drawChunk(position:Vector2i, size, tempheight):
 	var ground_mesh = MeshInstance3D.new()
+	ground_mesh.position=Vector3(position.x*size,tempheight,position.y*size)
 	ground_mesh.mesh = PlaneMesh.new()
+	ground_mesh.mesh.size=Vector2(size,size)
+	ground_mesh.mesh.center_offset=Vector3(size/2,0,size/2)
 	add_child(ground_mesh)
 
 func cameraMovement(delta):
@@ -72,9 +63,27 @@ func cameraMovement(delta):
 		camera.rotation.y-=delta*Config.cameraRotationSpeed
 
 func _ready():
-	drawChunks()
+	for x in range(World.chunks.size()):
+		for y in range(World.chunks[x].size()):
+			drawChunk(Vector2(x, y), 4, World.chunks[x][y].temptestingheight*1)
+
 
 func _process(delta):
+
+	if Input.is_action_just_pressed('stresstest'):
+		for x in 1000:
+			var tempactor=Humanoid.new()
+			tempactor.sex=randi_range(0,1)
+			if(tempactor.sex==0):
+				tempactor.title=Config.masculineForenames.pick_random()+" "+Config.surnames.pick_random()
+			elif(tempactor.sex==1):
+				tempactor.title=Config.feminineForenames.pick_random()+" "+Config.surnames.pick_random()
+			else:
+				tempactor.title="unnamed"
+			tempactor.health=100
+			tempactor.chunkpos=Vector2i(0,0)
+			World.chunks[0][0].addActor(tempactor)
+
 	#playerChunkMovement()
 	cameraMovement(delta)
 

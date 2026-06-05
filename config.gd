@@ -4,8 +4,8 @@ extends Node
 #CONFIGURABLE
 const uitilesize = 32
 const tickRate = 0.05
-const cameraSpeed = 5
-const cameraRotationSpeed = 5
+const cameraSpeed = 10
+const cameraRotationSpeed = 4
 
 const phoneticalphabet = [
 	'alfa',
