@@ -1,17 +1,14 @@
 # Actortest
 
 ## DESIGN/INSPIRATIONS
-I'm making a Godot game which is a life sim like the Sims (simulated ai, etc) crossed with the interactivity of project zomboid, crossed with a setting like GTA, with the combat of Arma/dcs. I want realistic everything, where I can add stuff depending on what I'm interested in at that time (ie real engine sim, helicopter dynamics, speed of sound, economies, police force, law, emotions, medical systems, romance, search and rescue, job simulation, crime etc.) I think I'll make the graphics low-poly, with low resolution textures, A. because I think it looks cool, and B. because it will be both quicker to run and quicker to develop.
+A Godot game which ideally would end up a life sim like the Sims (simulated ai, etc) crossed with the interactivity of project zomboid, crossed with a setting like GTA, with the combat of Arma/dcs. Realistic everything, where I can add stuff depending on what I'm interested in at that time (ie engine sim, helicopter dynamics, speed of sound, economies, police force, law, emotions, medical systems, romance, search and rescue, job simulation, crime etc.) I think I'll make the graphics low-poly, with low resolution textures, A. because I think it looks cool, and B. because it will be both quicker to run and quicker to develop.
 
 ## GOAL-ORIENTED AI/PATHFINDING
 I want AI to decide what to do based on it's goals. It will first worry about saving it's life, then it's relationships, then it's job etc based on what it thinks is important. It will have long term and short term goals.
 Needs → Motivators → Goals → Actions
-NOT:
-Need -> Action
-That is animal AI.
-It also needs different modes ie combat, work, relationship, survival etc
+It also needs different modes ie combat, work, relationship, survival etc (adrenaline?? psychology???)
 
-I want pathfinding to be based on what it can see around it so that it is quicker and more adaptable than navmesh or A star. I haven't quite decided how to make it so that it "knows" a location like it's town, without becoming robotic. Maybe they develop mental paths or something.
+I want pathfinding to be based on what it can see around it so that it is quicker and more adaptable than navmesh or A* (Haven't done any testing though, just ideas). I haven't quite decided how to make it so that it "knows" a location like it's town, without becoming robotic. Maybe they develop mental paths or something.
 I also want to develop an algorithmic text-to-speech system if my research proves it’s possible. Ideally it could handle pitch of voice, age, whisper-shout, emotion, etc.
 
 ## SIMULATION LEVELS
