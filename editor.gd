@@ -21,19 +21,18 @@ func _input(event):
 			$EditorUI.selectedtilepos = tile
 
 func _on_add_actor_button_pressed():
-	for x in 100:
-		var tempactor=Humanoid.new()
-		tempactor.sex=randi_range(0,1)
-		if(tempactor.sex==0):
-			tempactor.title=Config.masculineForenames.pick_random()+" "+Config.surnames.pick_random()
-		elif(tempactor.sex==1):
-			tempactor.title=Config.feminineForenames.pick_random()+" "+Config.surnames.pick_random()
-		else:
-			tempactor.title="unnamed"
+	var tempactor=Humanoid.new()
+	tempactor.sex=randi_range(0,1)
+	if(tempactor.sex==0):
+		tempactor.title=Config.masculineForenames.pick_random()+" "+Config.surnames.pick_random()
+	elif(tempactor.sex==1):
+		tempactor.title=Config.feminineForenames.pick_random()+" "+Config.surnames.pick_random()
+	else:
+		tempactor.title="unnamed"
 
-		tempactor.health=100
-		tempactor.chunkpos=Vector2i(tile.x,tile.y)
-		World.chunks[tile.x][tile.y].addActor(tempactor)
+	tempactor.health=100
+	tempactor.chunkpos=Vector2i(tile.x,tile.y)
+	World.chunks[tile.x][tile.y].addActor(tempactor)
 
 
 func _on_play_button_pressed():

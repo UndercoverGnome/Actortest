@@ -1,13 +1,33 @@
 #GAME.GD
 extends Node
 
-func _ready():
-	drawChunks()
+var tickTimer = 0.0
+var tickRateAverage = 0
+var tick_count = 0
+var elapsed_seconds = 0
 
-func _process(_delta):
-	DisplayServer.window_set_title("Actortest 0.2 | Game | "+str(Engine.get_frames_per_second())+"fps")
+func _ready():
+	#drawChunks()
+	pass
+
+func _process(delta):
 	playerChunkMovement()
-	tickChunks()
+	tickTimer += delta
+	elapsed_seconds += delta
+
+
+	if tickTimer >= Config.tickRate:
+		tickChunks()
+		tickTimer -= Config.tickRate
+		tick_count += 1
+
+	if elapsed_seconds >= 1.0:
+		tickRateAverage = round((tick_count / elapsed_seconds)*10000)/10000
+		tick_count = 0
+		elapsed_seconds = 0.0
+
+	DisplayServer.window_set_title("Actortest 0.2 | Game | "+str(Engine.get_frames_per_second())+"fps, "+str(tickRateAverage)+' tps')
+
 
 func playerChunkMovement():
 	if Input.is_action_just_pressed("ui_up"):

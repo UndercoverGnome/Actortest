@@ -3,6 +3,8 @@ extends Node
 
 #CONFIGURABLE
 const uitilesize = 32
+const tickRate = 0.05
+
 const phoneticalphabet = [
 	'alfa',
 	'bravo',
