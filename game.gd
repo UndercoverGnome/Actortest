@@ -92,9 +92,11 @@ func cameraMovement(delta):
 		camera.position.z=(World.mapsize.y*World.chunksize)-1
 
 	World.player.setChunk(Vector2i(floor(camera.position.x/World.chunksize),floor(camera.position.z/World.chunksize)))
+	World.player.position=Vector3(camera.position.x-World.player.chunkpos.x*World.chunksize,camera.position.y,camera.position.z--World.player.chunkpos.y*World.chunksize) #NEED FUNCTION LIKE SETCHUNK TO CHECK FOR ERRORS ETC
+	print(World.player.position)
 
 func _ready():
-	camera.position=Vector3(World.player.chunkpos.x*World.chunksize,10,World.player.chunkpos.y*World.chunksize)
+	camera.position=Vector3(World.player.chunkpos.x*World.chunksize,10,World.player.chunkpos.y*World.chunksize)+World.player.position
 
 
 func _process(delta):
@@ -112,6 +114,7 @@ func _process(delta):
 				tempactor.title="unnamed"
 			tempactor.health=100
 			tempactor.chunkpos=Vector2i(World.player.chunkpos)
+			tempactor.position=Vector3(0,0,0)
 			World.chunks[World.player.chunkpos.x][World.player.chunkpos.y].addActor(tempactor)
 
 	tickTimer += delta

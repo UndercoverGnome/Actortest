@@ -5,10 +5,12 @@ class_name Actor
 
 var title
 var chunkpos: Vector2i
+var position: Vector3
 
-func _init(title = "unnamed", chunkpos = Vector2i.ZERO):
+func _init(title = "unnamed", chunkpos = Vector2i.ZERO, position = Vector3(0,0,0)):
 	self.title = title
 	self.chunkpos = chunkpos
+	self.position = position
 
 func setChunk(destination: Vector2i):
 	if World.isValidChunk(destination):

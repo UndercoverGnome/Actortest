@@ -32,6 +32,7 @@ func _on_add_actor_button_pressed():
 
 	tempactor.health=100
 	tempactor.chunkpos=Vector2i(tile.x,tile.y)
+	tempactor.position=Vector3(0,0,0)
 	World.chunks[tile.x][tile.y].addActor(tempactor)
 
 

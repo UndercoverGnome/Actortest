@@ -4,7 +4,7 @@ extends Node
 #CONFIGURABLE
 const uitilesize = 32#32
 const tickRate = 0.05#0.05
-const cameraSpeed = 1000
+const cameraSpeed = 50
 const cameraRotationSpeed = 4
 const renderDistance = 2#2
 

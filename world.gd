@@ -27,10 +27,11 @@ func initializeChunks():
 
 func initializePlayer():
 	player = Humanoid.new(
-		randi_range(0,1),
 		"Play Er",
-		30,
-		Vector2(0,0)
+		Vector2i(0,0),
+		Vector3(0,0,0),
+		randi_range(0,1),
+		30
 		)
 	chunks[0][0].addActor(player)
 
