@@ -18,8 +18,7 @@ glow_enabled = true
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_4vnxm"]
 auto_exposure_enabled = true
 
-[sub_resource type="BoxMesh" id="BoxMesh_pgsjx"]
-size = Vector3(2048, 100, 1)
+[sub_resource type="BoxMesh" id="BoxMesh_g156g"]
 
 [node name="Game" type="Node" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_sxcvi")
@@ -51,12 +50,7 @@ offset_bottom = 31.0
 grow_horizontal = 0
 text = "Editor"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
-mesh = SubResource("BoxMesh_pgsjx")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -8)
-mesh = SubResource("BoxMesh_pgsjx")
+[node name="originmarker" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_g156g")
 
 [connection signal="pressed" from="GameUI/EditorButton" to="." method="_on_editor_button_pressed"]

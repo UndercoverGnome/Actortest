@@ -9,6 +9,7 @@ const mapsize = Vector2i(8, 8)
 var chunks:Array = []
 
 func _ready():
+	print('worldready')
 	initializeChunks()
 	initializePlayer()
 

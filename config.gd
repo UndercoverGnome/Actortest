@@ -7,6 +7,7 @@ const chunksize = 32
 const tickRate = 0.05
 const cameraSpeed = 20
 const cameraRotationSpeed = 4
+const renderDistance = 1
 
 const phoneticalphabet = [
 	'alfa',

@@ -5,7 +5,8 @@ var tickTimer = 0.0
 var tickRateAverage = 0
 var tick_count = 0
 var elapsed_seconds = 0
-var drawnchunks = []
+var drawnChunks = []
+var loadedChunks = []
 
 @export var camera: Node
 
@@ -28,7 +29,7 @@ func drawChunk(position:Vector2i, size):
 	var ground = MeshInstance3D.new()
 	ground.position=Vector3(position.x*size,0,position.y*size)
 	ground.mesh = PlaneMesh.new()
-	ground.mesh.size=Vector2(size,size)
+	ground.mesh.size=Vector2(size/1.01,size/1.01)#TEMP
 	ground.mesh.center_offset=Vector3(size/2,0,size/2)
 	add_child(ground)
 	return ground
@@ -66,17 +67,25 @@ func cameraMovement(delta):
 		camera.rotation.y-=delta*Config.cameraRotationSpeed
 	World.player.setChunk(Vector2i(floor(camera.position.x/Config.chunksize),floor(camera.position.z/Config.chunksize)))
 
-func _ready():
-	pass
-	#drawnchunks = []
-	#for x in range(World.chunks.size()):
-	#	for y in range(World.chunks[x].size()):
-	#		drawnchunks.append(drawChunk(Vector2(x, y), Config.chunksize))
+func get_loaded_chunks(radius: int) -> Array:
+	var loaded_chunks := []
 
-	#for x in range(drawnchunks.size()):
-	#	if x == 12:
-	#		drawnchunks[x].queue_free()
-	#		drawnchunks.pop_at(x)
+	for x in range(
+		World.player.chunkpos.x - radius,
+		World.player.chunkpos.x + radius + 1
+	):
+		for y in range(
+			World.player.chunkpos.y - radius,
+			World.player.chunkpos.y + radius + 1
+		):
+			if x >= 0 and y >= 0 and x < World.mapsize.x and y < World.mapsize.y:
+				loaded_chunks.append(World.chunks[x][y])
+
+	return loaded_chunks
+
+func _ready():
+	camera.position=Vector3(World.player.chunkpos.x*Config.chunksize,10,World.player.chunkpos.y*Config.chunksize)
+	print(camera.position)
 
 
 func _process(delta):
@@ -97,6 +106,20 @@ func _process(delta):
 	#playerChunkMovement()
 	cameraMovement(delta)
 
+
+	#SHOULD BE ON CHUNK MOVE (LATER)
+	for chunk in drawnChunks:
+		chunk.queue_free()
+	drawnChunks.clear()
+	loadedChunks.clear()
+
+	loadedChunks = get_loaded_chunks(Config.renderDistance)
+	drawnChunks = []
+	#print(loadedChunks)
+	for chunk in loadedChunks:
+		drawnChunks.append(drawChunk(Vector2(chunk.chunkid.x, chunk.chunkid.y), Config.chunksize))
+
+
 	tickTimer += delta
 	elapsed_seconds += delta
 
@@ -114,21 +137,6 @@ func _process(delta):
 
 func tick():
 	tickChunks()
-
-	var playerx = World.player.chunkpos.x
-	var playery = World.player.chunkpos.y
-
-	for chunk in drawnchunks:
-		chunk.queue_free()
-	drawnchunks.clear()
-
-	drawnchunks.append(drawChunk(Vector2(playerx, playery), Config.chunksize))
-	drawnchunks.append(drawChunk(Vector2(playerx+1, playery), Config.chunksize))
-	drawnchunks.append(drawChunk(Vector2(playerx-1, playery), Config.chunksize))
-	drawnchunks.append(drawChunk(Vector2(playerx, playery+1), Config.chunksize))
-	drawnchunks.append(drawChunk(Vector2(playerx, playery-1), Config.chunksize))
-
-
 
 
 func _on_editor_button_pressed():
