@@ -3,9 +3,8 @@ extends Node
 
 #CONFIGURABLE
 const uitilesize = 32#32
-const chunksize = 128#64
-const tickRate = 0.05
-const cameraSpeed = 100
+const tickRate = 0.05#0.05
+const cameraSpeed = 1000
 const cameraRotationSpeed = 4
 const renderDistance = 2#2
 

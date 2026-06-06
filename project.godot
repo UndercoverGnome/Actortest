@@ -25,6 +25,7 @@ Config="*res://config.gd"
 window/size/viewport_width=800
 window/size/viewport_height=600
 window/size/initial_position_type=0
+window/vsync/vsync_mode=0
 
 [input]
 

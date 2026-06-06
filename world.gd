@@ -5,6 +5,7 @@ var player: Actor
 
 #CONFIGURABLE
 const mapsize = Vector2i(16, 16)#8,8
+const chunksize = 128
 
 var chunks:Array = []
 

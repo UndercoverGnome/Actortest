@@ -6,9 +6,9 @@ class_name Actor
 var title
 var chunkpos: Vector2i
 
-func _init(settitle = "unnamed", setchunk=Vector2i(0,0)):
-	title = settitle
-	chunkpos = setchunk
+func _init(title = "unnamed", chunkpos = Vector2i.ZERO):
+	self.title = title
+	self.chunkpos = chunkpos
 
 func setChunk(destination: Vector2i):
 	if World.isValidChunk(destination):

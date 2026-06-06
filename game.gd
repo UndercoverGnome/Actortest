@@ -7,18 +7,15 @@ var tick_count = 0
 var elapsed_seconds = 0
 var drawnChunks = []
 var loadedChunks = []
+var last_chunk = Vector2i(-1,-1)
 
 @export var camera: Node
 
-func playerChunkMovement():
-	if Input.is_action_just_pressed("ui_up"):
-		World.player.moveChunk(Vector2i(0,-1))
-	if Input.is_action_just_pressed("ui_down"):
-		World.player.moveChunk(Vector2i(0,1))
-	if Input.is_action_just_pressed("ui_left"):
-		World.player.moveChunk(Vector2i(-1,0))
-	if Input.is_action_just_pressed("ui_right"):
-		World.player.moveChunk(Vector2i(1,0))
+func tick():
+	if World.player.chunkpos != last_chunk:
+		last_chunk = World.player.chunkpos
+		loadChunks()
+	tickChunks()
 
 func tickChunks():
 	for chunkcolumn in World.chunks:
@@ -27,6 +24,16 @@ func tickChunks():
 				chunk.tick()
 			else:
 				pass #chunk.faraway tick
+
+func loadChunks():
+	for chunk in drawnChunks:
+			chunk.queue_free()
+
+	drawnChunks.clear()
+	loadedChunks = World.getLoadedChunks(Config.renderDistance)
+
+	for chunk in loadedChunks:
+		drawnChunks.append(drawChunk(Vector2(chunk.chunkid.x, chunk.chunkid.y), World.chunksize))
 
 func drawChunk(position:Vector2i, size):
 	var ground = MeshInstance3D.new()
@@ -68,13 +75,31 @@ func cameraMovement(delta):
 		camera.rotation.y+=delta*Config.cameraRotationSpeed
 	if Input.is_action_pressed('ui_right'):
 		camera.rotation.y-=delta*Config.cameraRotationSpeed
-	World.player.setChunk(Vector2i(floor(camera.position.x/Config.chunksize),floor(camera.position.z/Config.chunksize)))
+
+	if camera.position.y <= 1:
+		camera.position.y=1
+
+	if camera.position.x <= 0:
+		camera.position.x=0
+
+	if camera.position.x >= World.mapsize.x*World.chunksize:
+		camera.position.x=(World.mapsize.x*World.chunksize)-1
+
+	if camera.position.z <= 0:
+		camera.position.z=0
+
+	if camera.position.z >= World.mapsize.y*World.chunksize:
+		camera.position.z=(World.mapsize.y*World.chunksize)-1
+
+	World.player.setChunk(Vector2i(floor(camera.position.x/World.chunksize),floor(camera.position.z/World.chunksize)))
 
 func _ready():
-	camera.position=Vector3(World.player.chunkpos.x*Config.chunksize,10,World.player.chunkpos.y*Config.chunksize)
+	camera.position=Vector3(World.player.chunkpos.x*World.chunksize,10,World.player.chunkpos.y*World.chunksize)
 
 
 func _process(delta):
+	cameraMovement(delta)
+
 	if Input.is_action_just_pressed('stresstest'):
 		for x in 1000:
 			var tempactor=Humanoid.new()
@@ -86,26 +111,8 @@ func _process(delta):
 			else:
 				tempactor.title="unnamed"
 			tempactor.health=100
-			tempactor.chunkpos=Vector2i(0,0)
-			World.chunks[0][0].addActor(tempactor)
-
-	#playerChunkMovement()
-	cameraMovement(delta)
-
-
-	#SHOULD BE ON CHUNK MOVE (LATER)
-	for chunk in drawnChunks:
-		chunk.queue_free()
-
-	drawnChunks.clear()
-	loadedChunks = World.getLoadedChunks(Config.renderDistance)
-
-	for chunk in loadedChunks:
-		drawnChunks.append(drawChunk(Vector2(chunk.chunkid.x, chunk.chunkid.y), Config.chunksize))
-
-
-
-
+			tempactor.chunkpos=Vector2i(World.player.chunkpos)
+			World.chunks[World.player.chunkpos.x][World.player.chunkpos.y].addActor(tempactor)
 
 	tickTimer += delta
 	elapsed_seconds += delta
@@ -121,10 +128,6 @@ func _process(delta):
 		elapsed_seconds = 0.0
 
 	DisplayServer.window_set_title("Actortest 0.2 | Game | "+str(Engine.get_frames_per_second())+"fps, "+str(tickRateAverage)+' tps')
-
-func tick():
-	tickChunks()
-
 
 func _on_editor_button_pressed():
 	get_tree().change_scene_to_file('res://editor.tscn')
