@@ -23,13 +23,16 @@ func playerChunkMovement():
 func tickChunks():
 	for chunkcolumn in World.chunks:
 		for chunk in chunkcolumn:
-			chunk.tick()
+			if loadedChunks.has(chunk):
+				chunk.tick()
+			else:
+				pass #chunk.faraway tick
 
 func drawChunk(position:Vector2i, size):
 	var ground = MeshInstance3D.new()
 	ground.position=Vector3(position.x*size,0,position.y*size)
 	ground.mesh = PlaneMesh.new()
-	ground.mesh.size=Vector2(size/1.01,size/1.01)#TEMP
+	ground.mesh.size=Vector2(size/1,size)
 	ground.mesh.center_offset=Vector3(size/2,0,size/2)
 	add_child(ground)
 	return ground
@@ -67,25 +70,8 @@ func cameraMovement(delta):
 		camera.rotation.y-=delta*Config.cameraRotationSpeed
 	World.player.setChunk(Vector2i(floor(camera.position.x/Config.chunksize),floor(camera.position.z/Config.chunksize)))
 
-func get_loaded_chunks(radius: int) -> Array:
-	var loaded_chunks := []
-
-	for x in range(
-		World.player.chunkpos.x - radius,
-		World.player.chunkpos.x + radius + 1
-	):
-		for y in range(
-			World.player.chunkpos.y - radius,
-			World.player.chunkpos.y + radius + 1
-		):
-			if x >= 0 and y >= 0 and x < World.mapsize.x and y < World.mapsize.y:
-				loaded_chunks.append(World.chunks[x][y])
-
-	return loaded_chunks
-
 func _ready():
-	camera.position=Vector3(World.player.chunkpos.x*Config.chunksize,10,World.player.chunkpos.y*Config.chunksize)
-	print(camera.position)
+	camera.position=Vector3(World.player.chunkpos.x*Config.chunksize,100,World.player.chunkpos.y*Config.chunksize)
 
 
 func _process(delta):
@@ -110,14 +96,15 @@ func _process(delta):
 	#SHOULD BE ON CHUNK MOVE (LATER)
 	for chunk in drawnChunks:
 		chunk.queue_free()
-	drawnChunks.clear()
-	loadedChunks.clear()
 
-	loadedChunks = get_loaded_chunks(Config.renderDistance)
-	drawnChunks = []
-	#print(loadedChunks)
+	drawnChunks.clear()
+	loadedChunks = World.getLoadedChunks(Config.renderDistance)
+
 	for chunk in loadedChunks:
 		drawnChunks.append(drawChunk(Vector2(chunk.chunkid.x, chunk.chunkid.y), Config.chunksize))
+
+
+
 
 
 	tickTimer += delta

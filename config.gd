@@ -3,11 +3,11 @@ extends Node
 
 #CONFIGURABLE
 const uitilesize = 32
-const chunksize = 32
+const chunksize = 64
 const tickRate = 0.05
-const cameraSpeed = 20
+const cameraSpeed = 200
 const cameraRotationSpeed = 4
-const renderDistance = 1
+const renderDistance = 2
 
 const phoneticalphabet = [
 	'alfa',

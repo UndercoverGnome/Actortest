@@ -35,3 +35,19 @@ func initializePlayer():
 
 func isValidChunk(pos: Vector2i):
 	return pos.x >= 0 and pos.y >= 0 and pos.x < mapsize.x and pos.y < mapsize.y
+
+func getLoadedChunks(radius: int) -> Array:
+	var loaded_chunks := []
+
+	for x in range(
+		player.chunkpos.x - radius,
+		player.chunkpos.x + radius + 1
+	):
+		for y in range(
+			player.chunkpos.y - radius,
+			player.chunkpos.y + radius + 1
+		):
+			if x >= 0 and y >= 0 and x < mapsize.x and y < mapsize.y:
+				loaded_chunks.append(chunks[x][y])
+
+	return loaded_chunks
