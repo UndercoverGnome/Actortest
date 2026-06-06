@@ -32,7 +32,7 @@ func drawChunk(position:Vector2i, size):
 	var ground = MeshInstance3D.new()
 	ground.position=Vector3(position.x*size,0,position.y*size)
 	ground.mesh = PlaneMesh.new()
-	ground.mesh.size=Vector2(size/1,size)
+	ground.mesh.size=Vector2(size/1.01,size/1.01)
 	ground.mesh.center_offset=Vector3(size/2,0,size/2)
 	add_child(ground)
 	return ground
@@ -71,7 +71,7 @@ func cameraMovement(delta):
 	World.player.setChunk(Vector2i(floor(camera.position.x/Config.chunksize),floor(camera.position.z/Config.chunksize)))
 
 func _ready():
-	camera.position=Vector3(World.player.chunkpos.x*Config.chunksize,100,World.player.chunkpos.y*Config.chunksize)
+	camera.position=Vector3(World.player.chunkpos.x*Config.chunksize,10,World.player.chunkpos.y*Config.chunksize)
 
 
 func _process(delta):

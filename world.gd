@@ -4,7 +4,7 @@ extends Node
 var player: Actor
 
 #CONFIGURABLE
-const mapsize = Vector2i(8, 8)
+const mapsize = Vector2i(16, 16)#8,8
 
 var chunks:Array = []
 

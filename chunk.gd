@@ -14,10 +14,14 @@ func addActor(actortoadd):
 	actors.append(actortoadd)
 
 func updateActorChunk(actor):
-	if actor.chunkpos != chunkid:
-		World.chunks[actor.chunkpos.x][actor.chunkpos.y].addActor(actor)
-		var actorarraylocation = actors.find(actor)
-		actors.pop_at(actorarraylocation)
+	if actor.chunkpos == chunkid:
+		return
+
+	actors.erase(actor)
+
+	var dest = World.chunks[actor.chunkpos.x][actor.chunkpos.y]
+	if not dest.actors.has(actor):
+		dest.addActor(actor)
 
 func tick():
 	var actors_to_transfer = []
