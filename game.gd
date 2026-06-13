@@ -33,9 +33,9 @@ func loadChunks():
 	loadedChunks = World.getLoadedChunks(Config.renderDistance)
 
 	for chunk in loadedChunks:
-		drawnChunks.append(drawChunk(Vector2(chunk.chunkid.x, chunk.chunkid.y), World.chunksize))
+		drawnChunks.append(createChunkGround(Vector2(chunk.chunkid.x, chunk.chunkid.y), World.chunksize))
 
-func drawChunk(position:Vector2i, size):
+func createChunkGround(position:Vector2i, size):
 	var ground = MeshInstance3D.new()
 	ground.position=Vector3(position.x*size,0,position.y*size)
 	ground.mesh = PlaneMesh.new()
@@ -83,20 +83,20 @@ func cameraMovement(delta):
 		camera.position.x=0
 
 	if camera.position.x >= World.mapsize.x*World.chunksize:
-		camera.position.x=(World.mapsize.x*World.chunksize)-1
+		camera.position.x=(World.mapsize.x*World.chunksize)
 
 	if camera.position.z <= 0:
 		camera.position.z=0
 
 	if camera.position.z >= World.mapsize.y*World.chunksize:
-		camera.position.z=(World.mapsize.y*World.chunksize)-1
+		camera.position.z=(World.mapsize.y*World.chunksize)
 
 	World.player.setChunk(Vector2i(floor(camera.position.x/World.chunksize),floor(camera.position.z/World.chunksize)))
-	World.player.position=Vector3(camera.position.x-World.player.chunkpos.x*World.chunksize,camera.position.y,camera.position.z--World.player.chunkpos.y*World.chunksize) #NEED FUNCTION LIKE SETCHUNK TO CHECK FOR ERRORS ETC
-	print(World.player.position)
+	World.player.position=Vector3(camera.position.x-World.player.chunkpos.x*World.chunksize,camera.position.y,camera.position.z-World.player.chunkpos.y*World.chunksize) #NEED FUNCTION LIKE SETCHUNK TO CHECK FOR ERRORS ETC
 
 func _ready():
-	camera.position=Vector3(World.player.chunkpos.x*World.chunksize,10,World.player.chunkpos.y*World.chunksize)+World.player.position
+	print(World.player.position)
+	camera.position=Vector3(World.player.chunkpos.x*World.chunksize,0,World.player.chunkpos.y*World.chunksize)+World.player.position
 
 
 func _process(delta):

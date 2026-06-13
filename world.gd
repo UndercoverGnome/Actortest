@@ -10,7 +10,6 @@ const chunksize = 128
 var chunks:Array = []
 
 func _ready():
-	print('worldready')
 	initializeChunks()
 	initializePlayer()
 
