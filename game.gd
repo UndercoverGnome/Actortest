@@ -7,14 +7,11 @@ var tick_count = 0
 var elapsed_seconds = 0
 var drawnChunks = []
 var loadedChunks = []
-var last_chunk = Vector2i(-1,-1)
 
 @export var camera: Node
 
 func tick():
-	if World.player.chunkpos != last_chunk:
-		last_chunk = World.player.chunkpos
-		loadChunks()
+	loadChunks()
 	tickChunks()
 
 func tickChunks():
@@ -83,20 +80,22 @@ func cameraMovement(delta):
 		camera.position.x=0
 
 	if camera.position.x >= World.mapsize.x*World.chunksize:
-		camera.position.x=(World.mapsize.x*World.chunksize)
+		camera.position.x=(World.mapsize.x*World.chunksize)-1
 
 	if camera.position.z <= 0:
 		camera.position.z=0
 
 	if camera.position.z >= World.mapsize.y*World.chunksize:
-		camera.position.z=(World.mapsize.y*World.chunksize)
+		camera.position.z=(World.mapsize.y*World.chunksize)-1
 
+
+	World.player.position=Vector3(camera.position.x-World.player.chunkpos.x*World.chunksize,camera.position.y,camera.position.z-World.player.chunkpos.y*World.chunksize) #NEED FUNCTION LIKE SETCHUNK TO CHECK FOR ERROR
+	print(Vector2i(floor(camera.position.x/World.chunksize),floor(camera.position.z/World.chunksize)))
 	World.player.setChunk(Vector2i(floor(camera.position.x/World.chunksize),floor(camera.position.z/World.chunksize)))
-	World.player.position=Vector3(camera.position.x-World.player.chunkpos.x*World.chunksize,camera.position.y,camera.position.z-World.player.chunkpos.y*World.chunksize) #NEED FUNCTION LIKE SETCHUNK TO CHECK FOR ERRORS ETC
+
 
 func _ready():
-	print(World.player.position)
-	camera.position=Vector3(World.player.chunkpos.x*World.chunksize,0,World.player.chunkpos.y*World.chunksize)+World.player.position
+	camera.position=Vector3(World.player.chunkpos.x*World.chunksize,10,World.player.chunkpos.y*World.chunksize)+World.player.position
 
 
 func _process(delta):
@@ -115,7 +114,7 @@ func _process(delta):
 			tempactor.health=100
 			tempactor.chunkpos=Vector2i(World.player.chunkpos)
 			tempactor.position=Vector3(0,0,0)
-			World.chunks[World.player.chunkpos.x][World.player.chunkpos.y].addActor(tempactor)
+			World.chunks[World.player.chunkpos.x][World.player.chunkpos.y].actors.append(tempactor)
 
 	tickTimer += delta
 	elapsed_seconds += delta

@@ -32,7 +32,7 @@ func initializePlayer():
 		randi_range(0,1),
 		30
 		)
-	chunks[0][0].addActor(player)
+	chunks[0][0].actors.append(player)
 
 func isValidChunk(pos: Vector2i):
 	return pos.x >= 0 and pos.y >= 0 and pos.x < mapsize.x and pos.y < mapsize.y

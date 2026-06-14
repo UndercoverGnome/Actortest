@@ -10,8 +10,6 @@ func _init(setchunkid, settitle = Config.phoneticalphabet.pick_random()+"-"+Conf
 	title = settitle
 	actors = setactors
 
-func addActor(actortoadd):
-	actors.append(actortoadd)
 
 func updateActorChunk(actor):
 	if actor.chunkpos == chunkid:
@@ -21,18 +19,12 @@ func updateActorChunk(actor):
 
 	var dest = World.chunks[actor.chunkpos.x][actor.chunkpos.y]
 	if not dest.actors.has(actor):
-		dest.addActor(actor)
+		dest.actors.append(actor)
 
 func tick():
 	var actors_to_transfer = []
 	for actor in actors:
-		if actor != World.player:
-			actor.moveChunk(
-				Vector2i(
-					randi_range(-1,1),
-					randi_range(-1,1)
-				)
-			)
+		#UPDATE CHUNK IF ACTOR HAS LEFT CHUNK
 
 		if actor.chunkpos != chunkid:
 			actors_to_transfer.append(actor)

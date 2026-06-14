@@ -33,8 +33,7 @@ func _on_add_actor_button_pressed():
 	tempactor.health=100
 	tempactor.chunkpos=Vector2i(tile.x,tile.y)
 	tempactor.position=Vector3(0,0,0)
-	World.chunks[tile.x][tile.y].addActor(tempactor)
-
+	World.chunks[tile.x][tile.y].actors.append(tempactor)
 
 func _on_play_button_pressed():
 	get_tree().change_scene_to_file('res://game.tscn')
