@@ -90,7 +90,6 @@ func cameraMovement(delta):
 
 
 	World.player.position=Vector3(camera.position.x-World.player.chunkpos.x*World.chunksize,camera.position.y,camera.position.z-World.player.chunkpos.y*World.chunksize) #NEED FUNCTION LIKE SETCHUNK TO CHECK FOR ERROR
-	print(Vector2i(floor(camera.position.x/World.chunksize),floor(camera.position.z/World.chunksize)))
 	World.player.setChunk(Vector2i(floor(camera.position.x/World.chunksize),floor(camera.position.z/World.chunksize)))
 
 
